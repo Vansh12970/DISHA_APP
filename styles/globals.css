@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================
+   DISHA Global Stylesheet
+   Professional Gradient UI Theme
+   =============================== */
+
+body {
+  font-family: 'Poppins', 'Inter', Arial, sans-serif;
+  background: linear-gradient(180deg, #F5E9DA 0%, #F5A623 60%, #D35400 100%);
+  color: hsl(var(--foreground));
+  transition: all 0.3s ease-in-out;
+}
+
+/* Utility Layer */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Base Theme Variables */
+@layer base {
+  :root {
+    /* 🌞 Light Mode Colors */
+    --background: 36 70% 96%; /* Warm beige (#F5E9DA) */
+    --foreground: 0 0% 10%; /* Charcoal black text */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Brand Colors */
+    --primary: 38 91% 56%; /* Amber (#F5A623) */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 72% 42%; /* Burnt Orange (#D35400) */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 191 63% 30%; /* Teal Blue (#1C6E7D) */
+    --accent-foreground: 0 0% 100%;
+
+    /* Alerts */
+    --destructive: 3 57% 40%; /* Deep Red (#A93226) */
+    --destructive-foreground: 0 0% 98%;
+
+    /* Neutral Utilities */
+    --muted: 36 30% 92%;
+    --muted-foreground: 0 0% 45%;
+    --border: 36 20% 80%;
+    --input: 36 20% 80%;
+    --ring: 24 72% 42%;
+    --radius: 0.75rem;
+
+    /* Sidebar / Dashboard */
+    --sidebar-background: 36 70% 96%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 38 91% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 24 72% 42%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 36 20% 85%;
+    --sidebar-ring: 38 91% 56%;
+
+    /* Charts */
+    --chart-1: 38 91% 56%;
+    --chart-2: 24 72% 42%;
+    --chart-3: 3 57% 40%;
+    --chart-4: 191 63% 30%;
+    --chart-5: 36 70% 96%;
+  }
+
+  /* 🌙 Dark Mode Colors */
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 38 91% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 72% 42%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 191 63% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 3 57% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 38 91% 56%;
+    --radius: 0.75rem;
+
+    /* Sidebar (Dark) */
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 38 91% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 24 72% 42%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 38 91% 56%;
+  }
+
+  /* ✅ Fixed Base Styling */
+  * {
+    border-color: hsl(var(--border) / 1);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    line-height: 1.6;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ✨ Custom Components */
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply px-5 py-2.5 rounded-lg text-white font-semibold transition-all;
+    background: linear-gradient(90deg, hsl(38 91% 56%), hsl(24 72% 42%));
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+
+  /* Card */
+  .card {
+    @apply rounded-xl shadow-md p-5;
+    background: hsl(var(--card));
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Alerts */
+  .alert-danger {
+    background: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+    @apply rounded-lg p-4 font-semibold;
+  }
+
+  .alert-info {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    @apply rounded-lg p-4 font-semibold;
+  }
+
+  /* Navbar */
+  .navbar {
+    background: linear-gradient(90deg, hsl(38 91% 56%), hsl(24 72% 42%));
+    color: hsl(var(--primary-foreground));
+    @apply font-semibold px-6 py-3;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Footer */
+  footer {
+    background-color: hsl(0 0% 10%);
+    color: hsl(var(--primary-foreground));
+    @apply text-center py-4 mt-8;
+    border-top: 2px solid hsl(38 91% 56%);
+  }
+}
