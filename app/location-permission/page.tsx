@@ -111,11 +111,11 @@ return (
         animate-fadeUp text-center
       "
     >
-      <h1 className="text-3xl md:text-4xl font-extrabold text-[#2E3E4E] mb-4 tracking-tight">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-[#000000] mb-4 tracking-tight">
         Location Permission
       </h1>
 
-      <p className="text-[#354556] text-[17px] leading-relaxed font-medium">
+      <p className="text-[#000000] text-[17px] leading-relaxed font-medium">
         Please enable precise location access for this app to enhance its functionality. 
         This allows us to monitor your location during emergencies. If you go offline, 
         we will provide your last known location to first responders, ensuring they can 

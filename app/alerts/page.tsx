@@ -61,7 +61,7 @@ interface NationwideWeatherItem {
 
 const GEMINI_ENDPOINT_BASE =
   "https://generativelanguage.googleapis.com/v1beta/models"
-const GEMINI_MODEL = "gemini-2.5-flash" // per your instruction
+const GEMINI_MODEL = "gemini-2.5-flash" 
 const TEN_MIN_MS = 10 * 60 * 1000
 const LS_KEY = "nationwideWeatherV1"
 
@@ -153,7 +153,7 @@ Format example:
       const payload = { ts: Date.now(), items }
       localStorage.setItem(LS_KEY, JSON.stringify(payload))
     } catch {
-      // ignore quota issues
+      // ignore
     }
   }
 
