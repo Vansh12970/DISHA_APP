@@ -62,7 +62,7 @@ export default function SignUpPage() {
     setError(null)
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/users/register", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

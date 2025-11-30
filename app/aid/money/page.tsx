@@ -95,7 +95,7 @@ export default function MoneyDonationPage() {
       const refreshToken = localStorage.getItem("refreshToken")
       if (!refreshToken) return false
 
-      const response = await fetch("http://localhost:8080/api/v1/users/refresh-token", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/refresh-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

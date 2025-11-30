@@ -52,7 +52,7 @@ export default function VolunteerPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/volunteer", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/volunteer`, {
         method: "POST",
         body: formDataToSend,
       })

@@ -318,8 +318,8 @@ export default function ReportPage() {
 
       // Determine the appropriate endpoint based on file type
       const endpoint = file.type.startsWith("image/")
-        ? "http://localhost:8080/api/v1/images/image-report"
-        : "http://localhost:8080/api/v1/videos/video-report"
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/images/image-report`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/videos/video-report`
 
       // Simulate upload progress
       const totalChunks = 100
@@ -368,10 +368,10 @@ export default function ReportPage() {
     {/* SUBMITTING OVERLAY */}
     {isSubmitting && (
       <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm">
-        <Card className="p-8 rounded-3xl glass-card border border-white/40 shadow-xl max-w-sm mx-auto text-center">
+        <Card className="p-8 rounded-3xl glass-card border border-black shadow-xl max-w-sm mx-auto text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black border-[#FDB813] mx-auto"></div>
           <p className="mt-4 text-xl font-semibold text-[#000000]">Storing your report...</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-white-600 mt-1">
             Please wait while we process your report
           </p>
         </Card>
