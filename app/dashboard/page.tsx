@@ -179,7 +179,7 @@ return (
       <div className="grid grid-cols-2 gap-6">
 
         <Link href="/safe-route">
-          <Card className="p-4 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
+          <Card className="p-4 h-40 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
             <div className="flex justify-center mb-3">
               <Image src="/safe-route.png" width={48} height={48} alt="Safe Route" />
             </div>
@@ -189,7 +189,7 @@ return (
         </Link>
 
         <Link href="/volunteer">
-          <Card className="p-4 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
+          <Card className="p-4 h-40 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
             <div className="flex justify-center mb-3">
               <Image src="/volunteer.png" width={48} height={48} alt="Volunteer" />
             </div>
@@ -199,7 +199,7 @@ return (
         </Link>
 
         <Link href="/aid">
-          <Card className="p-4 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
+          <Card className="p-4 h-40 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
             <div className="flex justify-center mb-3">
               <Image src="/donation.png" width={48} height={48} alt="Donate" />
             </div>
@@ -209,7 +209,7 @@ return (
         </Link>
 
         <Link href="/resources">
-          <Card className="p-4 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
+          <Card className="p-4 h-40 text-center rounded-2xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all border border-[#F5E9DA]">
             <div className="flex justify-center mb-3">
               <Image src="/information.png" width={48} height={48} alt="Survival Guides" />
             </div>
