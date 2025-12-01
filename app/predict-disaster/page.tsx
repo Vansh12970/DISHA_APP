@@ -229,13 +229,13 @@ export default function PredictDisasterPage() {
     fetchData()
   }, [])
 
-  if (loading) {
+  /*if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#FFF2DF]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     )
-  }
+  }*/
 
   if (error) {
     return (
@@ -272,6 +272,16 @@ export default function PredictDisasterPage() {
 
   return (
   <div className="min-h-screen bg-gradient-to-b from-[#F5E9DA] to-[#FFF2DF] p-5">
+
+    {loading && (
+  <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-white p-5 rounded-2xl shadow-lg flex flex-col items-center">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#D35400]"></div>
+      <p className="mt-3 text-[#2E4156] font-semibold">Predicting...</p>
+    </div>
+  </div>
+)}
+
 
     {/* HEADER */}
     <div className="flex items-center gap-3 mb-6">
