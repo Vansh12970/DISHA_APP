@@ -47,7 +47,10 @@ export default function SignUpPage() {
     e.preventDefault()
 
     // Check if all fields are filled
-    const requiredFields = Object.entries(formData).filter(([key, value]) => !value)
+    //const requiredFields = Object.entries(formData).filter(([key, value]) => !value)
+    const requiredFields = Object.entries(formData)
+    .filter(([key, value]) => typeof value === "string" && value.trim() === "")
+
     if (requiredFields.length > 0) {
       setError(`Please fill all required fields: ${requiredFields.map(([key]) => key).join(", ")}`)
       return
@@ -70,7 +73,16 @@ export default function SignUpPage() {
         body: JSON.stringify(formData),
       })
 
-      const data = await response.json()
+      //const data = await response.json()
+      const text = await response.text()
+
+        let data
+      try {
+      data = JSON.parse(text)
+      } catch {
+          throw new Error("Server is waking up or returned invalid response. Please try again.")
+      }
+
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to register")
@@ -246,25 +258,32 @@ return (
         </div>
 
         {/* Blood Group */}
-        <div className="space-y-2">
-          <Label className="text-[#000000] font-medium">Blood Group</Label>
-          <Select
-            required
-            value={formData.bloodGroup}
-            onValueChange={(value) => handleSelectChange("bloodGroup", value)}
-          >
-            <SelectTrigger className="bg-[#F9FBFF] border-[#E8E8E8] rounded-lg focus:ring-2 focus:ring-[#F5A623]">
-              <SelectValue placeholder="Select your blood group" />
-            </SelectTrigger>
-            <SelectContent>
-              {bloodGroups.map((group) => (
-                <SelectItem key={group} value={group}>
-                  {group}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+<div className="space-y-2">
+  <Label className="text-[#000000] font-medium">Blood Group</Label>
+
+  <Select onValueChange={(value) => handleSelectChange("bloodGroup", value)}>
+    <SelectTrigger
+      className="bg-white text-black border border-[#E8E8E8] rounded-lg focus:ring-2 focus:ring-[#F5A623]"
+    >
+      <SelectValue placeholder="Select your blood group" />
+    </SelectTrigger>
+
+    <SelectContent
+      className="bg-white text-black border border-[#E8E8E8] rounded-lg"
+    >
+      {bloodGroups.map((group) => (
+        <SelectItem
+          className="text-black hover:bg-gray-100"
+          key={group}
+          value={group}
+        >
+          {group}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+</div>
+
 
         {/* Age */}
         <div className="space-y-2">
@@ -282,31 +301,38 @@ return (
         </div>
 
         {/* Gender */}
-        <div className="space-y-2">
-          <Label className="text-[#000000] font-medium">Gender</Label>
-          <Select
-            required
-            value={formData.gender}
-            onValueChange={(value) => handleSelectChange("gender", value)}
-          >
-            <SelectTrigger className="bg-[#F9FBFF] border-[#E8E8E8] rounded-lg focus:ring-2 focus:ring-[#F5A623]">
-              <SelectValue placeholder="Select your gender" />
-            </SelectTrigger>
-            <SelectContent>
-              {genders.map((gender) => (
-                <SelectItem key={gender} value={gender}>
-                  {gender}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+<div className="space-y-2">
+  <Label className="text-[#000000] font-medium">Gender</Label>
+
+  <Select onValueChange={(value) => handleSelectChange("gender", value)}>
+    <SelectTrigger
+      className="bg-white text-black border border-[#E8E8E8] rounded-lg focus:ring-2 focus:ring-[#F5A623]"
+    >
+      <SelectValue placeholder="Select your gender" />
+    </SelectTrigger>
+
+    <SelectContent
+      className="bg-white text-black border border-[#E8E8E8] rounded-lg"
+    >
+      {genders.map((g) => (
+        <SelectItem
+          className="text-black hover:bg-gray-100"
+          key={g}
+          value={g}
+        >
+          {g}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+</div>
+
 
         {/* Terms */}
         <div className="flex items-center space-x-2">
           <Checkbox
             id="terms"
-            required
+            //required
             checked={termsAccepted}
             onCheckedChange={(checked) =>
               setTermsAccepted(checked as boolean)
