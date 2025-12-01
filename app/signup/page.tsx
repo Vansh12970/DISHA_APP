@@ -80,7 +80,7 @@ export default function SignUpPage() {
       try {
       data = JSON.parse(text)
       } catch {
-          throw new Error("Server is waking up or returned invalid response. Please try again.")
+          throw new Error("This email or username is already registered. Please try again.")
       }
 
 
