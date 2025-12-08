@@ -79,7 +79,7 @@ DISHA aims to bridge the gaps in disaster management through an intelligent and 
 ---
 
 ## Conclusion
-DISHA is more than just a disaster management tool; it is a lifeline for communities in crisis. By harnessing the power of technology and collaboration, DISHA strives to make disaster response faster, more efficient, and inclusive. Together, we can build a safer, more resilient world.
+DISHA is more than just a disaster management tool; it is a lifeline for communities in crisis. By harnessing the power of technology and collaboration, DISHA strives to make disaster response faster, more efficient, and inclusive. Together, we can build a safer, more resilient world. 
 
 ## Screenshots
 ![Home Page](assets/home.png)
