@@ -20,7 +20,9 @@ interface DisasterPrediction {
 }
 
 // Initialize Google Generative AI with the provided API key
-const genAI = new GoogleGenerativeAI("AIzaSyCZOXvAXWxl714zpsggbXrD2ErEZ1el0NE")
+const genAI = new GoogleGenerativeAI(
+  process.env.NEXT_PUBLIC_GEMINI_API_KEY as string
+)
 const openWeatherApiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY 
 
 export default function PredictDisasterPage() {
@@ -124,8 +126,7 @@ export default function PredictDisasterPage() {
     const predictSecondaryDisasters = async (weatherData: any, locationInfo: any) => {
       try {
         // Access the generative model
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
-      
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
 
         // Create a prompt for the AI model
         const prompt = `
@@ -156,12 +157,21 @@ export default function PredictDisasterPage() {
           }
         ]
         `
-        console.log("Prompt to Gemini API:", prompt);
+        //console.log("Prompt to Gemini API:", prompt);
 
         // Generate content
-        const result = await model.generateContent(prompt)
-        const response = await result.response
-        const text = response.text()
+        const result = await model.generateContent({
+  contents: [{ role: "user", parts: [{ text: prompt }] }],
+})
+
+const response = result.response
+const text = response.text()
+
+if (!text) {
+  console.warn("Gemini returned empty response")
+  return []
+}
+
 
         console.log("Generated text from Gemini API:", text)
 

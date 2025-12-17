@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
+
 interface AirQualityData {
   datetime: string
   pm1: number
@@ -94,25 +95,6 @@ export default function AlertsPage() {
     if (speed > 30) return "text-yellow-600"
     return "text-green-600"
   }
-
-  const geminiPrompt = useMemo(
-    () =>
-      `Return ONLY a VALID JSON array. 
-No text. No explanation. And only INDIA-WIDE weather information. And only for present time.
-Format example:
-[
-  {
-    "state": "string",
-    "condition": "string",
-    "severity": "low | medium | high",
-    "temperature": "string",
-    "rainfall": "string",
-    "windSpeed": "string",
-    "alertMessage": "string"
-  }
-]`,
-    []
-  )
 
   // Strip code fences and trailing text; parse safe JSON
   const safeParseGeminiJSON = (raw: string): NationwideWeatherItem[] | null => {
@@ -220,60 +202,94 @@ Format example:
   }
 
   const fetchNationwideFromGemini = async (): Promise<NationwideWeatherItem[] | null> => {
-    try {
-      const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
-      if (!apiKey) {
-        console.warn("Gemini API key missing: set NEXT_PUBLIC_GEMINI_API_KEY")
-        return null
-      }
-
-      const res = await fetch(
-        `${GEMINI_ENDPOINT_BASE}/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [{ text: geminiPrompt }],
-              },
-            ],
-            generationConfig: {
-              // keep it simple and fast
-              temperature: 0.2,
-              maxOutputTokens: 2048,
-              response_mime_type: "application/json" 
-            },
-          }),
-        }
-      )
-      //console.log(" Gemini response status:", res.status);
-      //console.log(" Gemini raw output:", await res.clone().text());
-
-
-      if (!res.ok) {
-        console.error("Gemini API error:", res.status, await res.text())
-        return null
-      }
-
-      const data = await res.json()
-      // Response shape: candidates[0].content.parts[0].text
-      const text =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text ??
-        data?.candidates?.[0]?.content?.parts?.map((p: any) => p?.text).join("\n") ??
-        ""
-
-      const parsed = safeParseGeminiJSON(text)
-      if (!parsed) {
-        console.warn("Gemini response could not be parsed as JSON.")
-      }
-      return parsed
-    } catch (e) {
-      console.error("Error calling Gemini:", e)
+  try {
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
+    if (!apiKey) {
+      console.warn("Gemini API key missing")
       return null
     }
+
+    const res = await fetch(
+      `${GEMINI_ENDPOINT_BASE}/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [
+                {
+                  text: `
+Return ONLY a JSON array (no markdown, no explanation).
+Use GENERAL weather conditions for Indian states.
+Do NOT say you lack real-time data.
+
+Format:
+[
+  {
+    "state": "Maharashtra",
+    "condition": "Heavy Rain",
+    "severity": "high",
+    "temperature": "28°C",
+    "rainfall": "Very High",
+    "windSpeed": "45 km/h",
+    "alertMessage": "Risk of flooding in coastal areas"
   }
+]
+                  `.trim(),
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 1024,
+          },
+        }),
+      }
+    )
+
+    const rawText = await res.text()
+    console.log("Gemini raw response:", rawText)
+
+    if (!res.ok) {
+      console.error("Gemini API error:", res.status, rawText)
+      return null
+    }
+
+      if (res.status === 503) {
+  await new Promise(r => setTimeout(r, 1500))
+  return fetchNationwideFromGemini()
+}
+
+    const json = JSON.parse(rawText)
+
+    const text =
+      json?.candidates?.[0]?.content?.parts
+        ?.map((p: any) => p.text || "")
+        .join("") || ""
+
+    if (!text) {
+      console.warn("Gemini returned empty text")
+      return null
+    }
+
+    const parsed = safeParseGeminiJSON(text)
+
+    if (!parsed) {
+      console.warn("Failed to parse Gemini JSON:", text)
+    }
+
+    return parsed
+  } catch (err) {
+    console.error("Gemini fetch failed:", err)
+    return null
+  }
+}
+
 
   const bootstrapNationwide = async () => {
     // 1) Load cached immediately (so user sees data as soon as they arrive)
