@@ -255,8 +255,9 @@ export default function ReportPage() {
 
       // Determine the appropriate endpoint based on file type
       const endpoint = selectedFile.type.startsWith("image/")
-        ? "http://localhost:8080/api/v1/images/image-report"
-        : "http://localhost:8080/api/v1/videos/video-report"
+         ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/images/image-report`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/videos/video-report`
+        
 
       // Send the request
       const response = await fetch(endpoint, {
